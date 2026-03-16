@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7-Day Protein Guide · JJ Virgin + Tony Robbins</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0e0e0e;--surface:#161616;--card:#1e1e1e;--border:#2a2a2a;
+    --text:#f0ede8;--muted:#8a8880;--hint:#4a4845;
+    --sa:#d85a30;--eu:#534ab7;--na:#185fa5;--oc:#0f6e56;
+    --gold:#c9a84c;--gold-light:#f0d080;
+    --r:10px;--r-lg:16px;
+  }
+  html{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6}
+  body{max-width:900px;margin:0 auto;padding:0 20px 60px}
+
+  /* HERO */
+  .hero{padding:64px 0 48px;border-bottom:1px solid var(--border)}
+  .hero-eyebrow{font-size:11px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+  .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(38px,6vw,68px);line-height:1.05;margin-bottom:20px;color:var(--text)}
+  .hero-title em{color:var(--gold);font-style:italic}
+  .hero-sub{font-size:15px;color:var(--muted);max-width:480px;line-height:1.7}
+  .hero-meta{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}
+  .hero-stat{display:flex;flex-direction:column}
+  .hero-stat-val{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold-light)}
+  .hero-stat-lbl{font-size:11px;color:var(--muted);letter-spacing:.05em}
+
+  /* CALC */
+  .calc-section{padding:40px 0;border-bottom:1px solid var(--border)}
+  .section-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .calc-row{display:flex;flex-direction:column;gap:6px}
+  .calc-row label{font-size:12px;color:var(--muted)}
+  input[type=range]{width:100%;accent-color:var(--gold)}
+  select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--r);font-size:13px;font-family:'DM Sans',sans-serif;width:100%}
+  .result-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .result-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+  .result-box .val{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold-light)}
+  .result-box .lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  .robbins-tip{background:var(--card);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 var(--r) var(--r) 0;font-size:13px;color:var(--muted);margin-top:20px;line-height:1.6}
+  .robbins-tip strong{color:var(--gold-light);font-weight:500}
+
+  /* WATER CALC */
+  .water-section{padding:40px 0;border-bottom:1px solid var(--border)}
+  .water-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+  .water-result-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+  .water-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+  .water-box .val{font-family:'DM Serif Display',serif;font-size:24px;color:#4aa8d8}
+  .water-box .lbl{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.04em}
+  .water-schedule{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+  .water-slot{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+  .water-slot .ws-time{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+  .water-slot .ws-amt{font-size:15px;font-weight:500;color:#4aa8d8}
+  .water-slot .ws-note{font-size:11px;color:var(--hint);margin-top:2px}
+  .water-tip{background:var(--card);border-left:3px solid #4aa8d8;padding:14px 18px;border-radius:0 var(--r) var(--r) 0;font-size:13px;color:var(--muted);margin-top:20px;line-height:1.6}
+  .water-tip strong{color:#7cc8e8;font-weight:500}
+  .w-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:#0a2a38;color:#4aa8d8;margin-left:6px}
+  input[type=range].blue{accent-color:#4aa8d8}
+
+  /* REGION TABS */
+  .region-nav{display:flex;gap:8px;padding:32px 0 0;flex-wrap:wrap}
+  .rtab{padding:10px 20px;border-radius:50px;border:1px solid var(--border);font-size:13px;cursor:pointer;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+  .rtab:hover{border-color:var(--text);color:var(--text)}
+  .rtab.on{color:var(--bg);border-color:transparent;font-weight:500}
+  .rtab[data-r="sa"].on{background:var(--sa)}
+  .rtab[data-r="eu"].on{background:var(--eu)}
+  .rtab[data-r="na"].on{background:var(--na)}
+  .rtab[data-r="oc"].on{background:var(--oc)}
+
+  /* VIEW TABS */
+  .view-nav{display:flex;gap:4px;margin:28px 0 24px;background:var(--card);border-radius:50px;padding:4px;width:fit-content}
+  .vtab{padding:7px 18px;border-radius:50px;border:none;font-size:12px;cursor:pointer;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s}
+  .vtab.on{background:var(--border);color:var(--text)}
+
+  /* DAY SELECTOR */
+  .day-nav{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+  .dbt{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);font-size:11px;cursor:pointer;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center}
+  .dbt:hover{border-color:var(--text);color:var(--text)}
+  .dbt.on{color:var(--bg);border-color:transparent;font-weight:500}
+
+  /* MEAL CARDS */
+  .meals-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .meal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;transition:border-color .2s}
+  .meal-card:hover{border-color:var(--border)}
+  .meal-slot{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .meal-dish{font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .macro-row{display:flex;gap:10px;flex-wrap:wrap}
+  .macro-pill{background:var(--surface);border-radius:4px;padding:3px 8px;font-size:11px;color:var(--muted)}
+  .macro-pill strong{color:var(--text);font-weight:500}
+  .pbar-wrap{margin-top:10px}
+  .pbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+  .pfill{height:100%;border-radius:2px;transition:width .5s}
+
+  /* DAY SUMMARY */
+  .day-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+  .sum-box{background:var(--surface);border-radius:var(--r);padding:12px;text-align:center}
+  .sum-val{font-family:'DM Serif Display',serif;font-size:22px}
+  .sum-lbl{font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+
+  /* SHOPPING */
+  .shop-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .shop-group{margin-bottom:24px}
+  .shop-group-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .shop-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+  .shop-item .qty{color:var(--muted)}
+  .shop-note{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:13px;color:var(--muted);margin-top:20px;line-height:1.6}
+
+  /* PREP */
+  .prep-list{display:flex;flex-direction:column;gap:12px}
+  .prep-item{display:flex;gap:14px;background:var(--card);border-radius:var(--r);padding:16px;border:1px solid var(--border)}
+  .prep-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;color:var(--bg)}
+  .prep-body .title{font-size:14px;font-weight:500;margin-bottom:4px;color:var(--text)}
+  .prep-body .desc{font-size:13px;color:var(--muted);line-height:1.6}
+  .ritual-box{margin-top:24px;background:var(--card);border:1px solid var(--gold);border-radius:var(--r-lg);padding:20px}
+  .ritual-box .ritual-label{font-size:10px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+  .ritual-box p{font-size:13px;color:var(--muted);line-height:1.7}
+
+  /* PRINCIPLES */
+  .principles{padding:40px 0;border-top:1px solid var(--border);margin-top:40px}
+  .principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .principle{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--border)}
+  .principle .p-icon{width:8px;height:8px;border-radius:50%;margin-bottom:10px}
+  .principle .p-title{font-size:14px;font-weight:500;margin-bottom:4px}
+  .principle .p-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+  /* FOOTER */
+  footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--hint)}
+
+  @media(max-width:600px){
+    .meals-grid,.shop-cols,.calc-grid,.day-summary,.result-row,.principles-grid{grid-template-columns:1fr}
+    .hero-title{font-size:38px}
+  }
+  @media print{
+    body{background:#fff;color:#111}
+    .hero,.calc-section,#region-content{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">JJ Virgin · Tony Robbins · 4 Regions</div>
+  <h1 class="hero-title">7-Day<br><em>Protein</em><br>Playbook</h1>
+  <p class="hero-sub">Eat protein first. Fuel with purpose. Meal plans built around what's available in South America, Europe, North America, and Oceania.</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><span class="hero-stat-val">150g</span><span class="hero-stat-lbl">Daily target</span></div>
+    <div class="hero-stat"><span class="hero-stat-val">4</span><span class="hero-stat-lbl">Meals / day</span></div>
+    <div class="hero-stat"><span class="hero-stat-val">30g+</span><span class="hero-stat-lbl">Protein per meal</span></div>
+    <div class="hero-stat"><span class="hero-stat-val">7</span><span class="hero-stat-lbl">Days planned</span></div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<div class="calc-section">
+  <div class="section-label">Step 1 — your personal target</div>
+  <div class="calc-grid">
+    <div class="calc-row">
+      <label>Ideal body weight: <span id="ibw-out" style="color:var(--gold-light);font-weight:500">150 lbs</span></label>
+      <input type="range" id="ibw" min="100" max="250" value="150" step="1" oninput="calc()">
+    </div>
+    <div class="calc-row">
+      <label>Goal</label>
+      <select id="goal" onchange="calc()">
+        <option value="0.7">Maintain health (0.7g / lb)</option>
+        <option value="1.0" selected>Fat loss / muscle / athletic (1g / lb)</option>
+      </select>
+    </div>
+  </div>
+  <div class="result-row">
+    <div class="result-box"><div class="val" id="r-daily">150g</div><div class="lbl">Daily minimum</div></div>
+    <div class="result-box"><div class="val" id="r-meal">38g</div><div class="lbl">Per meal (4 meals)</div></div>
+    <div class="result-box"><div class="val">100g</div><div class="lbl">Absolute floor</div></div>
+  </div>
+  <div class="robbins-tip"><strong>Tony Robbins:</strong> "You don't get what you wish for — you get what you plan for." Set this number now, write it somewhere visible, and treat it as a non-negotiable standard.</div>
+</div>
+
+<!-- WATER CALCULATOR -->
+<div class="water-section">
+  <div class="section-label">Step 2 — daily water target</div>
+  <div class="water-grid">
+    <div class="calc-row">
+      <label>Body weight: <span id="w-bw-out" style="color:#7cc8e8;font-weight:500">70 kg</span></label>
+      <input type="range" class="blue" id="w-bw" min="40" max="150" value="70" step="1" oninput="calcWater()">
+    </div>
+    <div class="calc-row">
+      <label>Activity level</label>
+      <select id="w-act" onchange="calcWater()">
+        <option value="1.0">Sedentary (desk job, no exercise)</option>
+        <option value="1.2" selected>Moderately active (3–4x / week)</option>
+        <option value="1.4">Very active (daily training)</option>
+        <option value="1.6">Athlete / intense daily training</option>
+      </select>
+    </div>
+    <div class="calc-row">
+      <label>Climate</label>
+      <select id="w-climate" onchange="calcWater()">
+        <option value="0">Temperate (Europe, Southern OC)</option>
+        <option value="200" selected>Warm / tropical (SA, coastal)</option>
+        <option value="400">Hot / humid (tropics, high altitude)</option>
+      </select>
+    </div>
+  </div>
+  <div class="water-result-row">
+    <div class="water-box"><div class="val" id="w-daily">2100</div><div class="lbl">ml / day</div></div>
+    <div class="water-box"><div class="val" id="w-glasses">9</div><div class="lbl">250ml glasses</div></div>
+    <div class="water-box"><div class="val" id="w-bottles">2.1</div><div class="lbl">1L bottles</div></div>
+    <div class="water-box"><div class="val" id="w-extra">+500</div><div class="lbl">ml per workout</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--muted);margin:16px 0 8px;letter-spacing:.06em;text-transform:uppercase">Drinking schedule</div>
+  <div class="water-schedule" id="w-schedule"></div>
+  <div class="water-tip"><strong>JJ Virgin:</strong> Drink 500ml first thing in the morning before coffee — it jumpstarts metabolism and flushes the liver after overnight fasting. Add a squeeze of lemon for an alkalising boost. <strong style="color:#7cc8e8">Bogotá tip:</strong> at 2,600m altitude your body loses moisture faster through respiration — add 300–400ml to your baseline.</div>
+</div>
+
+<!-- REGION TABS -->
+<div class="region-nav">
+  <button class="rtab on" data-r="sa" onclick="setRegion('sa',this)">South America</button>
+  <button class="rtab" data-r="eu" onclick="setRegion('eu',this)">Europe</button>
+  <button class="rtab" data-r="na" onclick="setRegion('na',this)">North America</button>
+  <button class="rtab" data-r="oc" onclick="setRegion('oc',this)">Oceania</button>
+</div>
+
+<div class="view-nav">
+  <button class="vtab on" onclick="setView('plan',this)">Weekly plan</button>
+  <button class="vtab" onclick="setView('shop',this)">Shopping list</button>
+  <button class="vtab" onclick="setView('prep',this)">Sunday prep</button>
+</div>
+
+<div id="region-content"></div>
+
+<!-- PRINCIPLES -->
+<div class="principles">
+  <div class="section-label">Foundation principles · all regions</div>
+  <div class="principles-grid">
+    <div class="principle">
+      <div class="p-icon" style="background:var(--gold)"></div>
+      <div class="p-title">Eat protein first</div>
+      <div class="p-desc">JJ Virgin: lead every meal with your protein. It controls hunger hormones, stabilises blood sugar, and guarantees you hit 30g minimum before anything else.</div>
+    </div>
+    <div class="principle">
+      <div class="p-icon" style="background:#534ab7"></div>
+      <div class="p-title">Identity-based rituals</div>
+      <div class="p-desc">Tony Robbins: link your food choices to who you are — "I'm someone who performs at the highest level." 60 seconds of incantation before meals transforms compliance into identity.</div>
+    </div>
+    <div class="principle">
+      <div class="p-icon" style="background:var(--oc)"></div>
+      <div class="p-title">Batch cook on Sundays</div>
+      <div class="p-desc">Two hours on Sunday eliminates daily decision-making. When healthy food is the easiest choice, you'll make it every time. Prep proteins, grains, and snack bags in one session.</div>
+    </div>
+    <div class="principle">
+      <div class="p-icon" style="background:var(--sa)"></div>
+      <div class="p-title">No sensitive foods</div>
+      <div class="p-desc">JJ Virgin: remove top food sensitivities for 3 weeks first. Items marked * (eggs, dairy) in the cheat sheet require completing the Virgin Diet before reintroducing.</div>
+    </div>
+    <div class="principle">
+      <div class="p-icon" style="background:var(--na)"></div>
+      <div class="p-title">Progress, not perfection</div>
+      <div class="p-desc">Robbins: raise your standard, not your stress. Miss a protein goal? Adjust the next meal — never skip two meals in a row. One bad meal is an event, not a pattern.</div>
+    </div>
+    <div class="principle">
+      <div class="p-icon" style="background:#ba7517"></div>
+      <div class="p-title">Measure what matters</div>
+      <div class="p-desc">Track protein grams, not calories. When you consistently hit protein targets, macros naturally fall into place. Use the cheat sheet's oz targets as your field guide.</div>
+    </div>
+  </div>
+</div>
+
+<footer>Built from the JJ Virgin Protein Cheat Sheet · Principles from Tony Robbins UPW · Shared with love</footer>
+
+<script>
+const COLORS = {sa:'#d85a30',eu:'#534ab7',na:'#185fa5',oc:'#0f6e56'};
+let curRegion = 'sa', curView = 'plan', curDay = 0;
+
+function calc(){
+  const ibw = parseInt(document.getElementById('ibw').value);
+  const rate = parseFloat(document.getElementById('goal').value);
+  document.getElementById('ibw-out').textContent = ibw + ' lbs';
+  const d = Math.max(Math.round(ibw*rate),100);
+  document.getElementById('r-daily').textContent = d + 'g';
+  document.getElementById('r-meal').textContent = Math.round(d/4) + 'g';
+}
+
+const DATA = {
+  sa:{
+    color:'#d85a30',
+    tagline:'Bogotá & beyond — grass-fed beef, fresh Pacific fish, native quinoa.',
+    days:[
+      {label:'Lun',name:'Lunes',meals:[
+        {slot:'Desayuno',dish:'4 huevos revueltos + aguacate ½ + tomate fresco + sal marina',p:32,c:8,f:22,kcal:360},
+        {slot:'Almuerzo',dish:'Pechuga de pollo 200g al limón + quinoa 1 taza + ensalada verde grande',p:52,c:38,f:10,kcal:450},
+        {slot:'Snack',dish:'Camarones al ajillo 120g + pepinos en rodajas + limón',p:27,c:6,f:5,kcal:180},
+        {slot:'Cena',dish:'Lomo de cerdo 180g + brócoli asado + arroz coliflor',p:44,c:14,f:9,kcal:320},
+      ]},
+      {label:'Mar',name:'Martes',meals:[
+        {slot:'Desayuno',dish:'Tortilla de 3 huevos + espinaca salteada + pico de gallo',p:28,c:6,f:18,kcal:300},
+        {slot:'Almuerzo',dish:'Tri-tip 200g a la parrilla + boniato asado + chimichurri',p:50,c:32,f:18,kcal:490},
+        {slot:'Snack',dish:'Yogur griego 200g + arándanos frescos',p:20,c:16,f:2,kcal:165},
+        {slot:'Cena',dish:'Mahi mahi 200g al horno + lentejas 1 taza + espárragos',p:55,c:30,f:7,kcal:400},
+      ]},
+      {label:'Mié',name:'Miércoles',meals:[
+        {slot:'Desayuno',dish:'2 huevos duros + aguacate + espinaca fresca + aceite de oliva',p:24,c:6,f:22,kcal:320},
+        {slot:'Almuerzo',dish:'Pollo prep 200g + quinoa prep 1 taza + verduras asadas',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Edamame ⅔ taza + almendras 20g',p:17,c:14,f:12,kcal:230},
+        {slot:'Cena',dish:'Camarones 200g salteados + arroz coliflor + aguacate',p:45,c:10,f:16,kcal:360},
+      ]},
+      {label:'Jue',name:'Jueves',meals:[
+        {slot:'Desayuno',dish:'4 huevos + salmón ahumado 50g + tomate cherry',p:38,c:4,f:20,kcal:350},
+        {slot:'Almuerzo',dish:'Lomo de res 180g + ensalada grande + aceite de oliva',p:48,c:8,f:22,kcal:420},
+        {slot:'Snack',dish:'Ceviche de corvina 150g + rodajas de pepino',p:30,c:8,f:4,kcal:200},
+        {slot:'Cena',dish:'Pollo prep 200g + boniato + espinaca salteada',p:52,c:30,f:8,kcal:400},
+      ]},
+      {label:'Vie',name:'Viernes',meals:[
+        {slot:'Desayuno',dish:'Tortilla 3 huevos + pico de gallo + aguacate',p:28,c:8,f:20,kcal:330},
+        {slot:'Almuerzo',dish:'Mahi mahi 200g + quinoa prep + ensalada verde',p:52,c:34,f:8,kcal:420},
+        {slot:'Snack',dish:'Camarones fríos 100g + guacamole casero',p:22,c:8,f:12,kcal:230},
+        {slot:'Cena',dish:'Cerdo lomo 200g + verduras asadas prep + chimichurri',p:48,c:12,f:14,kcal:380},
+      ]},
+      {label:'Sáb',name:'Sábado',meals:[
+        {slot:'Desayuno',dish:'4 huevos estrellados + chorizo de pollo 50g + espinaca',p:40,c:4,f:24,kcal:400},
+        {slot:'Almuerzo',dish:'Asado: tri-tip 220g + chimichurri + ensalada mixta',p:56,c:6,f:26,kcal:490},
+        {slot:'Snack',dish:'Yogur griego 200g + frutos rojos',p:20,c:14,f:2,kcal:160},
+        {slot:'Cena',dish:'Corvina al horno 200g + lentejas prep + brócoli',p:50,c:28,f:6,kcal:370},
+      ]},
+      {label:'Dom',name:'Domingo — Prep Day',meals:[
+        {slot:'Desayuno',dish:'3 huevos revueltos + aguacate (ligero antes del prep)',p:28,c:4,f:20,kcal:320},
+        {slot:'Almuerzo',dish:'Pollo al horno en lote 200g + quinoa fresca',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Edamame + almendras (preparar bolsas de la semana)',p:17,c:14,f:12,kcal:230},
+        {slot:'Cena',dish:'Sopa de lentejas con carne 300ml + ensalada',p:38,c:28,f:8,kcal:340},
+      ]},
+    ],
+    shopping:{
+      'Proteínas animales':[
+        {item:'Pechuga de pollo',qty:'1.5 kg'},
+        {item:'Tri-tip o lomo de res (grass-fed)',qty:'800 g'},
+        {item:'Lomo de cerdo',qty:'600 g'},
+        {item:'Mahi mahi o corvina fresca',qty:'600 g'},
+        {item:'Camarones (frescos o congelados)',qty:'500 g'},
+        {item:'Huevos campesinos',qty:'18 uds'},
+        {item:'Salmón ahumado',qty:'150 g'},
+        {item:'Yogur griego natural (sin azúcar)',qty:'800 g'},
+      ],
+      'Proteínas vegetales':[
+        {item:'Quinoa seca',qty:'500 g'},
+        {item:'Lentejas secas',qty:'400 g'},
+        {item:'Edamame congelado',qty:'300 g'},
+        {item:'Almendras crudas',qty:'200 g'},
+      ],
+      'Verduras y frutas':[
+        {item:'Espinaca fresca',qty:'400 g'},
+        {item:'Brócoli',qty:'500 g'},
+        {item:'Aguacate (Hass)',qty:'6 uds'},
+        {item:'Tomates cherry',qty:'400 g'},
+        {item:'Boniato / papa criolla',qty:'600 g'},
+        {item:'Pepinos',qty:'4 uds'},
+        {item:'Espárragos',qty:'300 g'},
+        {item:'Arándanos / frutos rojos',qty:'300 g'},
+        {item:'Limones',qty:'8 uds'},
+      ],
+      'Grasas y condimentos':[
+        {item:'Aceite de oliva extra virgen',qty:'500 ml'},
+        {item:'Perejil fresco (chimichurri)',qty:'1 manojo'},
+        {item:'Ajo',qty:'1 cabeza'},
+        {item:'Sal marina / sal del Himalaya',qty:'1 frasco'},
+      ],
+    },
+    prep:[
+      {t:'Pollo en lote (30 min)',d:'Hornear 1.2 kg pechuga a 200°C / 25 min con limón, ajo y aceite de oliva. Porcionar en 6 envases herméticos de 200g. Dura 5 días en nevera.'},
+      {t:'Quinoa (15 min)',d:'Cocinar 400g de quinoa seca con caldo (relación 1:2). Rinde ~8 porciones de 1 taza. Guardar en nevera hasta 5 días.'},
+      {t:'Lentejas (20 min)',d:'Cocer 400g lentejas sin remojar, 20 min. Dividir: mitad para sopa (añadir caldo y condimentos), mitad para ensaladas frías.'},
+      {t:'Verduras asadas (35 min)',d:'Asar brócoli, boniato y espárragos a 200°C, 30 min con aceite de oliva. Dividir en 4 envases para los días de la semana.'},
+      {t:'Camarones salteados (10 min)',d:'Saltear 300g en aceite de oliva, ajo y limón 5 min. Guardar fríos para snacks de lunes a miércoles.'},
+      {t:'Chimichurri (5 min)',d:'Mezclar perejil picado + ajo + aceite de oliva + vinagre + sal. Guarda 2 semanas en nevera. Versatile para carnes y pescado.'},
+      {t:'Bolsas de snack (10 min)',d:'Porcionar almendras (20g) + edamame descongelado (½ taza) en 5 bolsas. Listo para agarrar y llevar de lunes a viernes.'},
+    ],
+    ritual:'Ritual dominical: antes de empezar el prep, 60 segundos de pie con poder — hombros atrás, respiración profunda. Repite: "Preparo con intención. Me alimento con propósito. Soy alguien que rinde al máximo." Robbins dice que la fisiología primero, las palabras después. Transforma el prep en un acto de identidad, no de obligación.',
+  },
+  eu:{
+    color:'#534ab7',
+    tagline:'Mediterranean meets Nordic — lean, varied, and market-fresh.',
+    days:[
+      {label:'Mon',name:'Monday',meals:[
+        {slot:'Breakfast',dish:'3 scrambled eggs + smoked salmon 80g + rye crispbread',p:40,c:12,f:18,kcal:370},
+        {slot:'Lunch',dish:'Chicken breast 200g + roasted veg + olive oil dressing',p:50,c:16,f:12,kcal:380},
+        {slot:'Snack',dish:'Greek yogurt 200g + mixed berries',p:20,c:18,f:2,kcal:170},
+        {slot:'Dinner',dish:'Atlantic salmon 200g + green lentil salad + mixed greens',p:48,c:28,f:14,kcal:440},
+      ]},
+      {label:'Tue',name:'Tuesday',meals:[
+        {slot:'Breakfast',dish:'4 whole eggs + spinach sauté + cherry tomatoes + olive oil',p:32,c:8,f:20,kcal:340},
+        {slot:'Lunch',dish:'Lamb loin 180g + roasted root vegetables + fresh herbs',p:46,c:22,f:16,kcal:420},
+        {slot:'Snack',dish:'Smoked mackerel 80g + cucumber slices',p:24,c:2,f:14,kcal:220},
+        {slot:'Dinner',dish:'Halibut 200g + steamed broccoli + lemon olive oil',p:44,c:8,f:12,kcal:330},
+      ]},
+      {label:'Wed',name:'Wednesday',meals:[
+        {slot:'Breakfast',dish:'Greek yogurt 200g + 2 boiled eggs + handful of walnuts',p:34,c:10,f:18,kcal:350},
+        {slot:'Lunch',dish:'Chicken prep 200g + quinoa 1 cup + roasted peppers',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Cottage cheese 150g + cucumber + dill',p:20,c:6,f:4,kcal:140},
+        {slot:'Dinner',dish:'Pork tenderloin 180g + braised lentils + kale',p:48,c:30,f:8,kcal:390},
+      ]},
+      {label:'Thu',name:'Thursday',meals:[
+        {slot:'Breakfast',dish:'3 eggs omelette + smoked salmon 60g + avocado',p:38,c:4,f:24,kcal:390},
+        {slot:'Lunch',dish:'Lamb chop 200g + roasted courgette + fresh herb sauce',p:48,c:10,f:20,kcal:420},
+        {slot:'Snack',dish:'Greek yogurt 200g + walnuts 20g',p:20,c:8,f:14,kcal:240},
+        {slot:'Dinner',dish:'Salmon 200g + puy lentils + wilted spinach',p:50,c:28,f:14,kcal:440},
+      ]},
+      {label:'Fri',name:'Friday',meals:[
+        {slot:'Breakfast',dish:'4 eggs scrambled + smoked salmon 60g + rye',p:40,c:14,f:20,kcal:390},
+        {slot:'Lunch',dish:'Chicken breast prep 200g + quinoa + green salad',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Smoked salmon 80g + cucumber ribbons + capers',p:22,c:2,f:10,kcal:190},
+        {slot:'Dinner',dish:'Halibut 200g + roasted root veg + olive oil',p:44,c:24,f:12,kcal:390},
+      ]},
+      {label:'Sat',name:'Saturday',meals:[
+        {slot:'Breakfast',dish:'Full omelette (4 eggs) + smoked salmon + avocado',p:44,c:6,f:28,kcal:450},
+        {slot:'Lunch',dish:'Lamb loin 220g + roasted Med vegetables + herbs',p:56,c:14,f:22,kcal:480},
+        {slot:'Snack',dish:'Greek yogurt 200g + berries + pumpkin seeds',p:22,c:18,f:8,kcal:230},
+        {slot:'Dinner',dish:'Salmon 200g + puy lentils + kale + lemon',p:50,c:28,f:14,kcal:440},
+      ]},
+      {label:'Sun',name:'Sunday — Prep Day',meals:[
+        {slot:'Breakfast',dish:'3 eggs + avocado (light, before prep)',p:28,c:4,f:22,kcal:330},
+        {slot:'Lunch',dish:'Whole roast chicken (batch cook) + roasted veg',p:52,c:10,f:18,kcal:420},
+        {slot:'Snack',dish:'Greek yogurt + almonds (pack week snacks)',p:22,c:8,f:14,kcal:250},
+        {slot:'Dinner',dish:'Pork tenderloin + lentil soup + spinach',p:44,c:30,f:10,kcal:390},
+      ]},
+    ],
+    shopping:{
+      'Animal protein':[
+        {item:'Chicken breasts (free-range)',qty:'1.5 kg'},
+        {item:'Atlantic salmon fillets',qty:'700 g'},
+        {item:'Lamb loin chops',qty:'600 g'},
+        {item:'Halibut fillets',qty:'400 g'},
+        {item:'Pork tenderloin',qty:'500 g'},
+        {item:'Smoked salmon',qty:'200 g'},
+        {item:'Smoked mackerel',qty:'200 g'},
+        {item:'Eggs (free-range)',qty:'18 pcs'},
+        {item:'Greek yogurt (full-fat)',qty:'1 kg'},
+        {item:'Cottage cheese',qty:'300 g'},
+      ],
+      'Plant protein':[
+        {item:'Green / puy lentils',qty:'400 g'},
+        {item:'Quinoa',qty:'400 g'},
+        {item:'Walnuts / almonds',qty:'200 g'},
+        {item:'Pumpkin seeds',qty:'100 g'},
+      ],
+      'Vegetables & fruit':[
+        {item:'Spinach / kale',qty:'500 g'},
+        {item:'Broccoli',qty:'500 g'},
+        {item:'Courgette / peppers',qty:'600 g'},
+        {item:'Cucumber',qty:'3 pcs'},
+        {item:'Cherry tomatoes',qty:'400 g'},
+        {item:'Avocados',qty:'5 pcs'},
+        {item:'Mixed berries (fresh/frozen)',qty:'400 g'},
+        {item:'Lemons',qty:'6 pcs'},
+        {item:'Root vegetables (carrot, parsnip)',qty:'500 g'},
+      ],
+      'Fats & seasoning':[
+        {item:'Extra virgin olive oil',qty:'500 ml'},
+        {item:'Capers',qty:'1 jar'},
+        {item:'Fresh dill / herbs',qty:'1 bunch'},
+        {item:'Rye crispbread',qty:'1 pack'},
+      ],
+    },
+    prep:[
+      {t:'Whole roast chicken (45 min)',d:'Roast a whole chicken at 200°C / 45 min. Strip and portion into 6×150–200g containers. Use carcass for bone broth. Keeps 5 days refrigerated.'},
+      {t:'Quinoa (15 min)',d:'Cook 400g dry quinoa 2:1 water. Yields ~8 cups. Season with lemon and herbs. Refrigerate up to 5 days.'},
+      {t:'Puy lentils (25 min)',d:'Simmer 400g puy lentils 20–25 min. Half dressed with olive oil + lemon for salads; half kept plain for soup base.'},
+      {t:'Roasted vegetables (35 min)',d:'Tray-roast courgette, peppers, broccoli, root veg at 200°C / 30 min. Olive oil + sea salt. Portion into 4 containers.'},
+      {t:'Hard-boiled eggs (10 min)',d:'Boil 6 eggs 9 min. Refrigerate unpeeled — keeps the full week. Use for breakfasts and quick snacks.'},
+      {t:'Greek yogurt snack pots (5 min)',d:'Portion 200g yogurt into 4 small containers with a handful of berries on top. Grab-and-go snacks for the week.'},
+    ],
+    ritual:'Sunday ritual: Before you begin prep, stand in a power pose for 60 seconds. Robbins teaches that physiology precedes psychology. Deep breath, shoulders back, and say aloud: "Every meal I prepare is a vote for the person I am becoming." This isn\'t woo-woo — it\'s anchoring a high standard to a consistent behaviour.',
+  },
+  na:{
+    color:'#185fa5',
+    tagline:'Abundant options — choose quality cuts over convenience food.',
+    days:[
+      {label:'Mon',name:'Monday',meals:[
+        {slot:'Breakfast',dish:'4 whole eggs + 2 egg whites scrambled + salsa + avocado ½',p:36,c:8,f:22,kcal:380},
+        {slot:'Lunch',dish:'Bison burger 200g (no bun) + roasted sweet potato + side salad',p:48,c:30,f:16,kcal:460},
+        {slot:'Snack',dish:'Shrimp cocktail 120g + guacamole',p:26,c:8,f:10,kcal:230},
+        {slot:'Dinner',dish:'Ahi tuna steak 200g + roasted broccoli + olive oil',p:52,c:10,f:12,kcal:360},
+      ]},
+      {label:'Tue',name:'Tuesday',meals:[
+        {slot:'Breakfast',dish:'3 eggs + smoked salmon 80g + avocado + cherry tomatoes',p:38,c:6,f:24,kcal:390},
+        {slot:'Lunch',dish:'Ground beef 90/10 200g + cauliflower rice + roasted veg',p:50,c:14,f:18,kcal:430},
+        {slot:'Snack',dish:'Greek yogurt 200g + blueberries',p:20,c:18,f:2,kcal:170},
+        {slot:'Dinner',dish:'Chicken breast prep 200g + sweet potato + green beans',p:52,c:34,f:8,kcal:420},
+      ]},
+      {label:'Wed',name:'Wednesday',meals:[
+        {slot:'Breakfast',dish:'Carton egg whites 6 + 2 whole eggs scrambled + spinach',p:34,c:4,f:12,kcal:280},
+        {slot:'Lunch',dish:'Salmon fillet 200g + quinoa 1 cup + arugula salad',p:50,c:38,f:14,kcal:480},
+        {slot:'Snack',dish:'Shrimp 100g cold + celery + almond butter 1 tbsp',p:22,c:6,f:10,kcal:210},
+        {slot:'Dinner',dish:'New York strip 180g + roasted asparagus + olive oil',p:48,c:6,f:22,kcal:430},
+      ]},
+      {label:'Thu',name:'Thursday',meals:[
+        {slot:'Breakfast',dish:'4 eggs scrambled + turkey sausage 60g + peppers',p:38,c:8,f:20,kcal:370},
+        {slot:'Lunch',dish:'Chicken prep 200g + quinoa prep + roasted veg',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Tuna pouch 100g + cucumber slices',p:26,c:2,f:3,kcal:140},
+        {slot:'Dinner',dish:'Halibut 200g + lentils 1 cup + steamed broccoli',p:48,c:28,f:8,kcal:380},
+      ]},
+      {label:'Fri',name:'Friday',meals:[
+        {slot:'Breakfast',dish:'3 eggs + smoked salmon 80g + avocado',p:38,c:4,f:24,kcal:390},
+        {slot:'Lunch',dish:'Bison patty 200g + sweet potato + green salad',p:48,c:32,f:16,kcal:460},
+        {slot:'Snack',dish:'Greek yogurt 200g + walnuts',p:20,c:8,f:14,kcal:240},
+        {slot:'Dinner',dish:'Shrimp 200g stir-fry + cauliflower rice + avocado',p:44,c:12,f:16,kcal:370},
+      ]},
+      {label:'Sat',name:'Saturday',meals:[
+        {slot:'Breakfast',dish:'4 eggs + turkey bacon 3 strips + spinach sauté',p:40,c:4,f:22,kcal:380},
+        {slot:'Lunch',dish:'Ahi tuna 220g + quinoa + roasted asparagus',p:56,c:38,f:10,kcal:470},
+        {slot:'Snack',dish:'Smoked salmon 80g + cucumber + capers',p:22,c:2,f:10,kcal:190},
+        {slot:'Dinner',dish:'Ground beef 90/10 200g + roasted sweet potato + kale',p:52,c:32,f:18,kcal:490},
+      ]},
+      {label:'Sun',name:'Sunday — Prep Day',meals:[
+        {slot:'Breakfast',dish:'3 eggs + avocado (light, before prep)',p:28,c:4,f:20,kcal:310},
+        {slot:'Lunch',dish:'Batch chicken breast 200g + quinoa fresh',p:52,c:36,f:10,kcal:440},
+        {slot:'Snack',dish:'Tuna pouch + celery (prep snack bags)',p:24,c:4,f:4,kcal:150},
+        {slot:'Dinner',dish:'Salmon 200g + lentil soup + spinach',p:50,c:30,f:12,kcal:430},
+      ]},
+    ],
+    shopping:{
+      'Animal protein':[
+        {item:'Chicken breasts (family pack)',qty:'1.5 kg'},
+        {item:'Ground beef 90/10',qty:'800 g'},
+        {item:'Bison patties / ground bison',qty:'600 g'},
+        {item:'Ahi tuna steaks',qty:'500 g'},
+        {item:'Atlantic salmon fillets',qty:'500 g'},
+        {item:'Halibut fillets',qty:'400 g'},
+        {item:'Shrimp (frozen, peeled)',qty:'600 g'},
+        {item:'Smoked salmon',qty:'200 g'},
+        {item:'Tuna pouches (water-packed)',qty:'6 pouches'},
+        {item:'Turkey sausage / bacon',qty:'300 g'},
+        {item:'Eggs (pasture-raised)',qty:'18 pcs'},
+        {item:'Carton egg whites',qty:'1 carton'},
+      ],
+      'Plant protein':[
+        {item:'Quinoa',qty:'400 g'},
+        {item:'Green lentils',qty:'400 g'},
+        {item:'Greek yogurt (full-fat, plain)',qty:'1 kg'},
+        {item:'Walnuts / almonds',qty:'200 g'},
+        {item:'Almond butter (no added sugar)',qty:'1 jar'},
+      ],
+      'Vegetables & fruit':[
+        {item:'Spinach / arugula',qty:'400 g'},
+        {item:'Broccoli / asparagus',qty:'600 g'},
+        {item:'Sweet potatoes',qty:'800 g'},
+        {item:'Cauliflower (or frozen rice)',qty:'500 g'},
+        {item:'Avocados',qty:'6 pcs'},
+        {item:'Cherry tomatoes',qty:'400 g'},
+        {item:'Cucumber / celery',qty:'1 bunch each'},
+        {item:'Blueberries',qty:'300 g'},
+        {item:'Lemons / limes',qty:'6 pcs'},
+      ],
+      'Fats & seasoning':[
+        {item:'Extra virgin olive oil',qty:'500 ml'},
+        {item:'Capers',qty:'1 jar'},
+        {item:'Salsa (no sugar added)',qty:'1 jar'},
+        {item:'Sea salt + black pepper',qty:'—'},
+      ],
+    },
+    prep:[
+      {t:'Batch chicken (30 min)',d:'Grill or bake 1.2 kg chicken breast at 400°F / 205°C for 22–25 min. Season simply. Portion into 6 containers. Or grab a Costco rotisserie as backup.'},
+      {t:'Ground beef (20 min)',d:'Brown 600g ground beef 90/10 with garlic, onion, salt. Portion into 3 containers (200g each). Use in cauliflower rice bowls mid-week.'},
+      {t:'Quinoa (15 min)',d:'Cook 400g dry quinoa 2:1 water. Yields ~8 cups. Season with lemon. Refrigerate 5 days.'},
+      {t:'Roasted sweet potatoes (35 min)',d:'Cube and roast 600g sweet potato at 400°F / 205°C for 30 min with olive oil. Makes 4 side portions.'},
+      {t:'Lentils (25 min)',d:'Cook 400g lentils. Half for soup, half plain for salads.'},
+      {t:'Shrimp (10 min)',d:'Thaw 300g shrimp overnight. Toss in olive oil, garlic, lemon. Eat cold as snacks Mon–Wed.'},
+      {t:'Snack bags (10 min)',d:'Portion 5 snack bags: each with 100g shrimp or tuna pouch + cut cucumber. Store in fridge.'},
+    ],
+    ritual:'Robbins technique: before Sunday prep, write your target protein number on a sticky note and put it on the fridge. Every time you open it this week, you\'re reminded of your standard. Small environmental cues reinforce identity — "I\'m someone who hits 150g protein every day" stops being a goal and becomes a fact.',
+  },
+  oc:{
+    color:'#0f6e56',
+    tagline:'World-class lamb, Tasmanian salmon, and fresh barramundi — protein is never scarce.',
+    days:[
+      {label:'Mon',name:'Monday',meals:[
+        {slot:'Breakfast',dish:'3 eggs + Tasmanian smoked salmon 80g + avocado + spinach',p:40,c:4,f:26,kcal:410},
+        {slot:'Lunch',dish:'Lamb loin chops 200g + roasted pumpkin + broccolini',p:48,c:22,f:20,kcal:460},
+        {slot:'Snack',dish:'Salmon portion 100g (cold, prep) + edamame ½ cup',p:30,c:10,f:10,kcal:260},
+        {slot:'Dinner',dish:'Barramundi fillet 200g + cauliflower rice + kale sauté',p:44,c:10,f:8,kcal:310},
+      ]},
+      {label:'Tue',name:'Tuesday',meals:[
+        {slot:'Breakfast',dish:'4 whole eggs + wilted spinach + cherry tomatoes + olive oil',p:32,c:8,f:20,kcal:340},
+        {slot:'Lunch',dish:'Chicken breast 200g + quinoa 1 cup + roasted veg',p:52,c:38,f:10,kcal:450},
+        {slot:'Snack',dish:'Greek yogurt 200g + passionfruit + macadamias 15g',p:22,c:18,f:12,kcal:270},
+        {slot:'Dinner',dish:'Lamb shoulder (slow) 200g + roasted sweet potato + greens',p:48,c:28,f:22,kcal:500},
+      ]},
+      {label:'Wed',name:'Wednesday',meals:[
+        {slot:'Breakfast',dish:'2 boiled eggs + smoked salmon 80g + avocado + rye',p:36,c:12,f:22,kcal:390},
+        {slot:'Lunch',dish:'Barramundi 200g + lentils 1 cup + roasted pumpkin',p:48,c:30,f:8,kcal:400},
+        {slot:'Snack',dish:'Edamame ⅔ cup + raw almonds 20g',p:17,c:14,f:12,kcal:230},
+        {slot:'Dinner',dish:'Chicken prep 200g + roasted veg prep + olive oil',p:52,c:20,f:12,kcal:400},
+      ]},
+      {label:'Thu',name:'Thursday',meals:[
+        {slot:'Breakfast',dish:'3 eggs scrambled + smoked salmon 60g + spinach',p:36,c:4,f:22,kcal:360},
+        {slot:'Lunch',dish:'Lamb loin 200g + quinoa + roasted broccolini',p:50,c:36,f:18,kcal:500},
+        {slot:'Snack',dish:'Greek yogurt 200g + mango chunks',p:20,c:22,f:2,kcal:190},
+        {slot:'Dinner',dish:'Salmon fillet 200g + steamed Asian greens + sesame oil',p:48,c:6,f:16,kcal:380},
+      ]},
+      {label:'Fri',name:'Friday',meals:[
+        {slot:'Breakfast',dish:'4 eggs + kangaroo/turkey sausage 60g + tomato',p:40,c:6,f:20,kcal:370},
+        {slot:'Lunch',dish:'Barramundi 200g + quinoa prep + green salad',p:48,c:38,f:10,kcal:440},
+        {slot:'Snack',dish:'Smoked salmon 80g + cucumber + lemon',p:22,c:2,f:10,kcal:190},
+        {slot:'Dinner',dish:'Lamb chops 200g + roasted pumpkin + kale',p:50,c:24,f:22,kcal:490},
+      ]},
+      {label:'Sat',name:'Saturday',meals:[
+        {slot:'Breakfast',dish:'Full omelette (4 eggs) + smoked salmon + avocado',p:44,c:4,f:28,kcal:440},
+        {slot:'Lunch',dish:'Slow lamb shoulder 220g + roasted root veg + herbs',p:56,c:22,f:26,kcal:540},
+        {slot:'Snack',dish:'Greek yogurt 200g + berries + macadamias',p:22,c:18,f:14,kcal:290},
+        {slot:'Dinner',dish:'Barramundi 200g + lentil salad + Asian greens',p:48,c:28,f:10,kcal:400},
+      ]},
+      {label:'Sun',name:'Sunday — Prep Day',meals:[
+        {slot:'Breakfast',dish:'3 eggs + avocado (light, before prep)',p:28,c:4,f:22,kcal:330},
+        {slot:'Lunch',dish:'Rack of lamb (batch, Sunday roast) 200g + veg',p:52,c:12,f:24,kcal:470},
+        {slot:'Snack',dish:'Edamame + almonds (prep snack bags for week)',p:17,c:14,f:12,kcal:230},
+        {slot:'Dinner',dish:'Salmon 200g + lentil soup + spinach',p:50,c:28,f:14,kcal:440},
+      ]},
+    ],
+    shopping:{
+      'Animal protein':[
+        {item:'Lamb loin chops (AUS/NZ grass-fed)',qty:'800 g'},
+        {item:'Lamb shoulder (slow roast)',qty:'600 g'},
+        {item:'Barramundi fillets',qty:'700 g'},
+        {item:'Tasmanian salmon fillets',qty:'600 g'},
+        {item:'Smoked salmon',qty:'200 g'},
+        {item:'Chicken breasts (free-range)',qty:'800 g'},
+        {item:'Kangaroo mince or sausage',qty:'300 g'},
+        {item:'Eggs (free-range)',qty:'18 pcs'},
+        {item:'Greek yogurt (full-fat)',qty:'1 kg'},
+      ],
+      'Plant protein':[
+        {item:'Green lentils',qty:'400 g'},
+        {item:'Quinoa',qty:'400 g'},
+        {item:'Edamame (frozen, shelled)',qty:'400 g'},
+        {item:'Macadamia nuts',qty:'150 g'},
+        {item:'Almonds (raw)',qty:'150 g'},
+      ],
+      'Vegetables & fruit':[
+        {item:'Baby spinach / kale',qty:'500 g'},
+        {item:'Broccolini',qty:'400 g'},
+        {item:'Pumpkin (Kent/Jap)',qty:'600 g'},
+        {item:'Sweet potato',qty:'600 g'},
+        {item:'Asian greens (bok choy/gai lan)',qty:'400 g'},
+        {item:'Avocados',qty:'5 pcs'},
+        {item:'Cherry tomatoes',qty:'400 g'},
+        {item:'Cucumber',qty:'3 pcs'},
+        {item:'Passionfruit / mango',qty:'4 pcs each'},
+        {item:'Mixed berries',qty:'300 g'},
+        {item:'Lemons',qty:'6 pcs'},
+      ],
+      'Fats & seasoning':[
+        {item:'Extra virgin olive oil',qty:'500 ml'},
+        {item:'Sesame oil (cold-pressed)',qty:'1 bottle'},
+        {item:'Fresh herbs (rosemary, thyme)',qty:'1 bunch each'},
+        {item:'Sea salt flakes',qty:'1 pack'},
+      ],
+    },
+    prep:[
+      {t:'Lamb shoulder (2 hrs, hands-off)',d:'Season and slow-roast at 160°C for 2 hrs. Pull apart and portion into 4 containers (200g). Outstanding for 5 days in the fridge — gets better with time.'},
+      {t:'Salmon batch (20 min)',d:'Bake 4 salmon fillets at 200°C / 18 min with lemon and dill. Keep 2 whole for dinners, flake 2 for snack portions.'},
+      {t:'Quinoa (15 min)',d:'Cook 400g dry quinoa. Season with lemon and olive oil. Refrigerate 5 days.'},
+      {t:'Roasted veg (35 min)',d:'Roast pumpkin, sweet potato, broccolini at 200°C / 30 min. Portion into 4 containers.'},
+      {t:'Lentil salad (20 min)',d:'Cook 400g lentils. Dress half with olive oil, lemon, herbs for cold salads. Keep half plain for soup.'},
+      {t:'Edamame snack bags (5 min)',d:'Thaw edamame. Portion into 5 bags with 20g macadamias each. Grab-and-go for the whole week.'},
+    ],
+    ritual:'Oceania is uniquely positioned for a high-quality protein lifestyle — the lamb and fish quality here is world-class. Robbins principle: "Proximity is power." Stock your kitchen with premium proteins at the start of the week and your environment does the work for you. The Sunday rack of lamb is not just food — it is a weekly anchor that signals to yourself and others that you are serious about how you live.',
+  },
+};
+
+function setRegion(r, btn){
+  curRegion = r; curDay = 0;
+  document.querySelectorAll('.rtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+function setView(v, btn){
+  curView = v;
+  document.querySelectorAll('.vtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+function setDay(d){
+  curDay = d;
+  render();
+}
+function render(){
+  const el = document.getElementById('region-content');
+  const d = DATA[curRegion];
+  const col = d.color;
+  let html = `<p style="font-size:13px;color:var(--muted);margin-bottom:20px">${d.tagline}</p>`;
+  if(curView==='plan'){
+    html += `<div class="day-nav">`;
+    d.days.forEach((day,i)=>{
+      html += `<button class="dbt${i===curDay?' on':''}" style="${i===curDay?'background:'+col+';border-color:'+col+';':''}" onclick="setDay(${i})">${day.label}</button>`;
+    });
+    html += `</div>`;
+    const day = d.days[curDay];
+    const totP = day.meals.reduce((s,m)=>s+m.p,0);
+    const totC = day.meals.reduce((s,m)=>s+m.c,0);
+    const totF = day.meals.reduce((s,m)=>s+m.f,0);
+    const totK = day.meals.reduce((s,m)=>s+m.kcal,0);
+    html += `<div style="font-size:16px;font-weight:500;margin-bottom:14px;color:var(--text)">${day.name}</div>`;
+    html += `<div class="day-summary">
+      <div class="sum-box"><div class="sum-val" style="color:${col}">${totP}g</div><div class="sum-lbl">Protein</div></div>
+      <div class="sum-box"><div class="sum-val">${totC}g</div><div class="sum-lbl">Carbs</div></div>
+      <div class="sum-box"><div class="sum-val">${totF}g</div><div class="sum-lbl">Fat</div></div>
+      <div class="sum-box"><div class="sum-val">${totK}</div><div class="sum-lbl">Kcal</div></div>
+    </div>`;
+    html += `<div class="meals-grid">`;
+    day.meals.forEach(m=>{
+      html += `<div class="meal-card">
+        <div class="meal-slot">${m.slot}</div>
+        <div class="meal-dish">${m.dish}</div>
+        <div class="macro-row">
+          <div class="macro-pill"><strong>${m.p}g</strong> protein</div>
+          <div class="macro-pill"><strong>${m.c}g</strong> carbs</div>
+          <div class="macro-pill"><strong>${m.f}g</strong> fat</div>
+          <div class="macro-pill"><strong>${m.kcal}</strong> kcal</div>
+        </div>
+        <div class="pbar-wrap"><div class="pbar"><div class="pfill" style="width:${Math.min(Math.round(m.p/60*100),100)}%;background:${col}"></div></div></div>
+      </div>`;
+    });
+    html += `</div>`;
+    html += `<div class="robbins-tip" style="margin-top:20px"><strong>JJ Virgin reminder:</strong> Aim for at least 30g at every meal. Each meal above shows the protein bar — longer bar = closer to your per-meal goal. Adjust portions up or down using the oz chart from the cheat sheet.</div>`;
+  }
+  else if(curView==='shop'){
+    html += `<div class="shop-cols">`;
+    const groups = Object.entries(d.shopping);
+    const half = Math.ceil(groups.length/2);
+    [groups.slice(0,half), groups.slice(half)].forEach(col_groups=>{
+      html += `<div>`;
+      col_groups.forEach(([grp,items])=>{
+        html += `<div class="shop-group"><div class="shop-group-title">${grp}</div>`;
+        items.forEach(it=>{
+          html += `<div class="shop-item"><span>${it.item}</span><span class="qty">${it.qty}</span></div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div>`;
+    html += `<div class="shop-note"><strong style="color:var(--gold-light)">Shopping tip:</strong> Buy proteins in bulk and freeze half. For the freshest fish, visit a local market Sunday morning before prep. Everything on this list is for one person for 7 days.</div>`;
+  }
+  else if(curView==='prep'){
+    html += `<div class="prep-list">`;
+    d.prep.forEach((step,i)=>{
+      html += `<div class="prep-item">
+        <div class="prep-num" style="background:${col}">${i+1}</div>
+        <div class="prep-body"><div class="title">${step.t}</div><div class="desc">${step.d}</div></div>
+      </div>`;
+    });
+    html += `</div>`;
+    html += `<div class="ritual-box"><div class="ritual-label">Tony Robbins — Sunday ritual</div><p>${d.ritual}</p></div>`;
+  }
+  el.innerHTML = html;
+}
+function calcWater(){
+  const bw = parseInt(document.getElementById('w-bw').value);
+  const act = parseFloat(document.getElementById('w-act').value);
+  const climate = parseInt(document.getElementById('w-climate').value);
+  document.getElementById('w-bw-out').textContent = bw + ' kg';
+  const base = Math.round(bw * 33 * act) + climate;
+  const glasses = Math.round(base / 250);
+  const bottles = (base / 1000).toFixed(1);
+  document.getElementById('w-daily').textContent = base;
+  document.getElementById('w-glasses').textContent = glasses;
+  document.getElementById('w-bottles').textContent = bottles;
+  const slots = [
+    {time:'Wake up',amt:500,note:'Before coffee'},
+    {time:'Mid-morning',amt:Math.round(base*0.15/50)*50,note:'Between meals'},
+    {time:'Before lunch',amt:250,note:'15 min prior'},
+    {time:'Afternoon',amt:Math.round(base*0.2/50)*50,note:'2–4 pm'},
+    {time:'Pre-workout',amt:250,note:'30 min before'},
+    {time:'During workout',amt:500,note:'Per hour'},
+    {time:'Post-workout',amt:Math.round(base*0.15/50)*50,note:'Rehydrate'},
+    {time:'Evening',amt:Math.round(base*0.1/50)*50,note:'With dinner'},
+  ];
+  const sched = document.getElementById('w-schedule');
+  sched.innerHTML = slots.map(s=>`
+    <div class="water-slot">
+      <div class="ws-time">${s.time}</div>
+      <div class="ws-amt">${s.amt} ml</div>
+      <div class="ws-note">${s.note}</div>
+    </div>`).join('');
+}
+calcWater();
+render();
+document.querySelectorAll('.vtab')[0].classList.add('on');
+</script>
+</body>
+</html>
